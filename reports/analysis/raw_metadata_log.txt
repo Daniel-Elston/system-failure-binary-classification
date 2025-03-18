@@ -1,0 +1,42 @@
+Head of the dataset:
+   comp_age  monthly_run_time loc  flow_rate  opx_vol  max_output_rate    s1     s2     s3    s4    s5     s6  days_since_maintenance  target
+0      0.55               9.5   B    0.99740     <NA>               32  10.0   1.90  0.580  3.13  0.22  0.080                     9.0       0
+1      0.32              12.7   A    0.99184     <NA>               28   6.9  10.55  0.300  3.07  0.30  0.037                     4.0       0
+2      0.57               9.7   B    0.99743     <NA>               86   7.2   2.30  0.660  3.53  0.03  0.078                    16.0       0
+3      0.50               9.5   B    0.99593     <NA>               84   7.1   1.80  0.755  3.19  0.15  0.107                    20.0       0
+4      0.44              10.8   A    0.99280     <NA>              127   7.0   4.90  0.290  3.17  0.37  0.034                    26.0       0
+
+Dataset Info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 6497 entries, 0 to 6496
+Data columns (total 14 columns):
+ #   Column                  Non-Null Count  Dtype  
+---  ------                  --------------  -----  
+ 0   comp_age                6493 non-null   float64
+ 1   monthly_run_time        6497 non-null   float64
+ 2   loc                     6497 non-null   object 
+ 3   flow_rate               6497 non-null   float64
+ 4   opx_vol                 805 non-null    Int64  
+ 5   max_output_rate         6497 non-null   int64  
+ 6   s1                      6487 non-null   float64
+ 7   s2                      6495 non-null   float64
+ 8   s3                      6489 non-null   float64
+ 9   s4                      6488 non-null   float64
+ 10  s5                      6494 non-null   float64
+ 11  s6                      6495 non-null   float64
+ 12  days_since_maintenance  6497 non-null   float64
+ 13  target                  6497 non-null   int64  
+dtypes: Int64(1), float64(10), int64(2), object(1)
+memory usage: 717.1+ KB
+
+
+Dataset Description:
+       comp_age  monthly_run_time  flow_rate  opx_vol  max_output_rate        s1        s2        s3        s4        s5        s6  days_since_maintenance    target
+count  6493.000          6497.000   6497.000    805.0         6497.000  6487.000  6495.000  6489.000  6488.000  6494.000  6495.000                6497.000  6497.000
+mean      0.531            10.492      0.995    5.631          115.742     7.217     5.444     0.340     3.218     0.319     0.056                  30.525     0.197
+std       0.149             1.193      0.003    3.403           56.519     1.297     4.758     0.165     0.161     0.145     0.035                  17.749     0.397
+min       0.220             8.000      0.987      0.0            6.000     3.800     0.600     0.080     2.720     0.000     0.009                   1.000     0.000
+25%       0.430             9.500      0.992      3.0           77.000     6.400     1.800     0.230     3.110     0.250     0.038                  17.000     0.000
+50%       0.510            10.300      0.995      6.0          118.000     7.000     3.000     0.290     3.210     0.310     0.047                  29.000     0.000
+75%       0.600            11.300      0.997      9.0          156.000     7.700     8.100     0.400     3.320     0.390     0.065                  41.000     0.000
+max       2.000            14.900      1.039     11.0          440.000    15.900    65.800     1.580     4.010     1.660     0.611                 289.000     1.000

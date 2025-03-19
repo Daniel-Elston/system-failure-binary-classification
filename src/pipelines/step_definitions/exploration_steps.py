@@ -25,6 +25,7 @@ def get_exploration_definitions(modules: dict, path_key: str) -> list[StepDefini
                 "dataset": LazyLoad(dm=modules.get(path_key)),
                 "path_key": path_key
             },
+            outputs=f"{path_key}-skew-kurt"
         ),
         StepDefinition(
             name="generate-visuals",

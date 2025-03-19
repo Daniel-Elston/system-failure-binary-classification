@@ -43,22 +43,11 @@ class EvaluateModel(BasePipeline):
 
     def run(self):
         """Loads the best pipeline from disk and the already feature-selected test set, then evaluates the model."""
-        # X_train_fs, X_test_fs, y_train, y_test = self.load_data()
         self.cross_validate(self.x_train_fs, self.y_train)
         y_test_pred = self.evaluate_model()
         if not hasattr(self.best_pipeline, "predict"):
             raise ValueError("Pipeline has not been trained before cross-validation.")
-        return {
-            "y-test-pred": y_test_pred,
-        }
-
-    # def load_data(self):
-    #     path_key_list = ["x_train_fs", "x_test_fs", "y_train", "y_test"]
-    #     data_frames = [
-    #         self.load_data_module(self.create_data_module(k))
-    #         for k in path_key_list
-    #     ]
-        # return data_frames
+        return {"y-test-pred": y_test_pred}
 
     def cross_validate(self, X_train, y_train):
         """Performs cross-validation and logs results."""
@@ -74,11 +63,6 @@ class EvaluateModel(BasePipeline):
 
     def evaluate_model(self):
         """Evaluates the trained model on the test set."""
-        # Load model that does NOT have feature selection step
-        # model = self.module_handler.load_data("model")
-
-        # Check SelectFromModel is NOT inside the model
         assert "feature_selector" not in dict(self.model.steps), "Feature selector should not be in final model."
         y_test_pred = self.model.predict(self.x_test_fs.to_numpy())
-        # self.module_handler.save_data("y_test_pred", y_test_pred)
         return y_test_pred

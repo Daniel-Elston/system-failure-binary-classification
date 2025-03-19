@@ -16,7 +16,7 @@ def get_processing_definitions(modules: dict) -> list[StepDefinition]:
             args={
                 "dataset": LazyLoad(dm=modules.get("raw-data")),
             },
-            # method_name="perform_data_checks"
+            outputs=["processed-data"]
         ),
         StepDefinition(
             name="build-features",
@@ -24,7 +24,7 @@ def get_processing_definitions(modules: dict) -> list[StepDefinition]:
             args={
                 "dataset": LazyLoad(dm=modules.get("processed-data")),
             },
-            # method_name="perform_data_checks"
+            outputs=["feature-eng"]
         ),
         StepDefinition(
             name="transform-distributions",
@@ -33,35 +33,6 @@ def get_processing_definitions(modules: dict) -> list[StepDefinition]:
                 "dataset": LazyLoad(dm=modules.get("feature-eng")),
                 "raw_data_skew_kurt": LazyLoad(dm=modules.get("raw-data-skew-kurt")),
             },
-            # method_name="perform_data_checks"
+            outputs=["transformed-data"]
         ),
     ]
-
-
-    # def process(self):
-    #     preprocess = [
-    #         DataPreprocessor(
-    #             ctx=self.ctx,
-    #             dataset=self.load_data_module(self.dm_raw),
-    #             module_handler=self.data_module_handler,
-    #         )
-    #     ]
-    #     self._execute_steps(preprocess)
-
-    #     build_features = [
-    #         BuildFeatures(
-    #             ctx=self.ctx,
-    #             dataset=self.load_data_module(self.dm_processed),
-    #             module_handler=self.data_module_handler,
-    #         )
-    #     ]
-    #     self._execute_steps(build_features)
-
-    #     transform = [
-    #         DistributionTransformer(
-    #             ctx=self.ctx,
-    #             dataset=self.load_data_module(self.dm_feature_eng),
-    #             module_handler=self.data_module_handler,
-    #         )
-    #     ]
-    #     self._execute_steps(transform)

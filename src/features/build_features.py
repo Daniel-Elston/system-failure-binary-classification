@@ -34,7 +34,6 @@ class BuildFeatures:
             logging.info(f"Building Feature: {name}")
             df = func(df)
         return {'feature-eng': df}
-        # self.module_handler.save_data("feature_eng", round(df, 3))
 
     def interaction_features(self, df):
         """Create polynomial and interaction features"""

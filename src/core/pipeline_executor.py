@@ -22,5 +22,3 @@ class PipelineExecutor:
         """Wraps the step with a logging decorator, then executes"""
         decorated_step = log_step()(step)
         return decorated_step()
-
-

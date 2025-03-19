@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+
 import pandas as pd
 from ydata_profiling import ProfileReport
 
@@ -19,7 +21,6 @@ class CollectMetadata:
         self.dataset = dataset
         self.path_key = path_key
         self.paths: Paths = ctx.paths
-        print(self.path_key)
 
     def run(self):
         self.metadata()
@@ -27,30 +28,22 @@ class CollectMetadata:
         # self.generate_report()
 
     def metadata(self):
-        df = self.dataset
         file_path = self.paths.get_path(f"{self.path_key}-metadata")
-        print(file_path)
 
         with open(file_path, "w") as f:
             f.write("Head of the dataset:\n")
-            f.write(df.head().to_string() + "\n\n")
+            f.write(self.dataset.head().to_string() + "\n\n")
 
             f.write("Dataset Info:\n")
-            df.info(buf=f)
+            self.dataset.info(buf=f)
 
             f.write("\n\nDataset Description:\n")
-            f.write(round(df.describe(), 3).to_string() + "\n")
+            f.write(round(self.dataset.describe(), 3).to_string() + "\n")
     
     def output_metadata(self):
-        df = self.dataset
-        print("Head of the dataset:\n")
-        print(df.head())    
-
-        print("\n\nDataset Info:\n")
-        df.info()
-
-        print("\n\nDataset Description:\n")
-        print(round(df.describe(), 3))
+        logging.debug(f"Head of the dataset:\n{self.dataset.head()}")
+        logging.debug(f"\n\nDataset Info:\n{self.dataset.info()}")
+        logging.debug(f"\n\nDataset Description:\n{round(self.dataset.describe(), 3)}")
 
     def generate_report(self):
         profile = ProfileReport(self.dataset, title='title')

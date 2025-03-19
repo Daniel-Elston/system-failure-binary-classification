@@ -4,7 +4,7 @@ import logging
 
 import numpy as np
 import seaborn as sns
-
+from pprint import pformat
 from config.pipeline_context import PipelineContext
 from config.settings import Config
 from src.data_handling.data_module import DataModule
@@ -33,7 +33,7 @@ class DataQualityChecks:
             ("find_skewness_kurtosis", self.find_skewness_kurtosis()),
         ]
         for step_name, step_result in steps:
-            logging.debug(f"{step_name}:\n {step_result}\n")
+            logging.debug(f"{step_name}:\n {pformat(step_result)}\n")
         return {f'{self.path_key}-skew-kurt': self.find_skewness_kurtosis()}
 
     def find_duplicates(self):

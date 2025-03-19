@@ -37,7 +37,6 @@ class DatasetSplitter:
         to_save = {}
         for path_key, data in steps:
             to_save[path_key] = data
-            # self.module_handler.save_data(path_key, data)
         return to_save
 
     def split_dataset(self, df: pd.DataFrame):

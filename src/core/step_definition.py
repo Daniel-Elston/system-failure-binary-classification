@@ -9,6 +9,7 @@ class StepDefinition:
     step_class: Type
     args: dict
     method_name: str = "run"
+    outputs: list[str] = attrs.field(factory=list)
 
 def create_step_map(definitions: List[StepDefinition]) -> dict:
     """Convert a list of StepDefinitions into a StepFactory-compatible map."""

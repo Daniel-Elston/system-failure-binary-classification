@@ -21,7 +21,8 @@ def get_training_definitions(
             args={
                 "dataset": LazyLoad(dm=modules.get("transformed-data")),
             },
-            method_name="split"
+            method_name="split",
+            outputs=["x-train", "x-test", "y-train", "y-test"]
         ),
         StepDefinition(
             name="train-model",
@@ -34,6 +35,7 @@ def get_training_definitions(
                 "pipeline_builder": pipeline_builder,
                 "skf": skf
             },
-            method_name="run"
+            method_name="run",
+            outputs=["selected-features", "x-train-selected", "x-test-selected", "model"]
         ),
     ]

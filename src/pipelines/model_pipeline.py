@@ -13,10 +13,6 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 
-# from src.models.eval import EvaluateModel
-from src.models.split_dataset import DatasetSplitter
-from src.models.trainer import ModelTrainer
-# from src.plots.visuals import EvaluationVisuals
 
 
 class ModelPipeline(BasePipeline):
@@ -65,68 +61,6 @@ class ModelPipeline(BasePipeline):
     def evaluate(self):
         run_model_definitions = get_evaluation_definitions(self.modules)
         step_order = ["evaluate-model", "evaluation-visuals"]
-        save_points = ["evaluate-model"]#, "evaluation-visuals"]
+        save_points = ["evaluate-model"]
         factory = StepFactory(ctx=self.ctx, step_map=create_step_map(run_model_definitions))
         factory.run_pipeline(step_order, save_points)
-
-
-
-
-# class ModelPipeline(BasePipeline):
-#     def __init__(
-#         self, ctx: PipelineContext,
-#     ):
-#         super().__init__(ctx)
-#         self.transformed = self.create_data_module(path_key="transformed-data")
-#         self.dm_model = self.create_data_module(path_key="model")
-
-#         self.feature_selector = SelectFromModel(
-#             estimator=RandomForestClassifier(
-#                 n_estimators=100,
-#                 random_state=self.config.random_state
-#             ),
-#             threshold="median"
-#         )
-#         self.pipeline_builder = ImbPipeline(
-#             steps=[
-#                 ('feature_selector', self.feature_selector),
-#                 ('scaler', StandardScaler()),
-#                 ("sampler", self.params.get_sampler()),
-#                 ('classifier', self.params.get_model())
-#             ]
-#         )
-#         self.skf = StratifiedKFold(
-#             n_splits=self.hyperparams.cv_folds,
-#             shuffle=True,
-#             random_state=self.config.random_state
-#         )
-
-#     def train_and_evaluate(self):
-#         training = [
-#             DatasetSplitter(
-#                 ctx=self.ctx,
-#                 dataset=self.load_data_module(self.transformed),
-#                 module_handler=self.data_module_handler,
-#             ),
-#             ModelTrainer(
-#                 ctx=self.ctx,
-#                 module_handler=self.data_module_handler,
-#                 pipeline_builder=self.pipeline_builder,
-#                 skf=self.skf
-#             ),
-#         ]
-#         self._execute_steps(training)
-
-#         evaluation = [
-#             EvaluateModel(
-#                 ctx=self.ctx,
-#                 model=self.load_data_module(self.dm_model),
-#                 module_handler=self.data_module_handler,
-#             ),
-#             EvaluationVisuals(
-#                 ctx=self.ctx,
-#                 model=self.load_data_module(self.dm_model),
-#                 path_key="evaluation"
-#             )
-#         ]
-#         self._execute_steps(evaluation)

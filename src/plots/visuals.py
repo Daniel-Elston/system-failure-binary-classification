@@ -13,6 +13,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import roc_curve
 from ydata_profiling import ProfileReport
+from pprint import pformat
 
 from config.pipeline_context import PipelineContext
 from config.settings import Config
@@ -108,7 +109,7 @@ class ExploratoryVisuals:
         target_col = self.config.target_col
         target_corr = correlation_matrix[target_col]
         relevant_cols = target_corr[abs(target_corr) >= threshold].index.tolist()
-        logging.debug(f"Method: {method}, Threshold: {threshold}, Relevant Correlated columns: {relevant_cols}")
+        logging.debug(f"Method: {method}, Threshold: {threshold}, Relevant Correlated columns:\n{pformat(relevant_cols)}")
         sub_corr_matrix = correlation_matrix.loc[relevant_cols, relevant_cols]
         plt.figure(figsize=(12, 10))
         ax = sns.heatmap(
@@ -152,20 +153,11 @@ class EvaluationVisuals(BasePipeline):
         self.path_key = path_key
 
     def run(self):
-        # X_test_fs, y_test, y_test_pred = self.load_data()
         self.plot_confusion_matrix(self.y_test, self.y_test_pred)
         self.plot_roc_curve(self.model, self.x_test_fs, self.y_test)
         self.plot_precision_recall_curve(self.model, self.x_test_fs, self.y_test)
         self.plot_boxplot()
         self.generate_classification_report(self.y_test, self.y_test_pred)
-
-    # def load_data(self):
-    #     path_key_list = ["x_test_fs", "y_test", "y_test_pred"]
-    #     data_frames = [
-    #         self.load_data_module(self.create_data_module(k))
-    #         for k in path_key_list
-    #     ]
-    #     return data_frames
 
     def plot_confusion_matrix(self, y_test, y_test_pred):
         """Generates a Confusion Matrix for the model.

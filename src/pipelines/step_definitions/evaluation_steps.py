@@ -19,7 +19,7 @@ def get_evaluation_definitions(modules: dict) -> list[StepDefinition]:
                 "y_test": LazyLoad(dm=modules.get("y-test")),
                 'model': LazyLoad(dm=modules.get("model")),
             },
-            # method_name="perform_data_checks"
+            outputs=["y-test-pred"],
         ),
         StepDefinition(
             name="evaluation-visuals",
@@ -31,6 +31,5 @@ def get_evaluation_definitions(modules: dict) -> list[StepDefinition]:
                 "model": LazyLoad(dm=modules.get("model")),
                 "path_key": "evaluation"
             },
-            # method_name="perform_data_checks"
         ),
     ]

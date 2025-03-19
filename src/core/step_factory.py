@@ -32,7 +32,6 @@ class StepFactory(BasePipeline):
         method = getattr(instance, method_name)
         return log_step()(method)()
 
-
     def run_pipeline(self, step_order: List[str], checkpoints: List[str] = None):
         """Loops through each step name and dispatches to the factory."""
         checkpoints = checkpoints or []

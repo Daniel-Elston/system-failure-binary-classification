@@ -10,6 +10,7 @@ from src.pipelines.validation_pipeline import ValidationPipeline
 from src.pipelines.eda_pipeline import EDAPipeline
 from utils.project_setup import init_project
 import warnings
+warnings.filterwarnings("ignore")
 
 
 class MainPipeline:

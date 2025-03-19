@@ -108,22 +108,6 @@ class RawDataDict(ApplyDataDict):
                 "days_since_maintenance": float,
                 "target": int
             },
-            # "use_cols": [
-            #     'comp_age',
-            #     'monthly_run_time',
-            #     'loc',
-            #     'flow_rate',
-            #     'opx_vol',
-            #     'max_output_rate',
-            #     's1',
-            #     's2',
-            #     's3',
-            #     's4',
-            #     's5',
-            #     's6',
-            #     'days_since_maintenance',
-            #     'target'
-            # ],
             "use_cols": [],
             "na_values": [],
         }

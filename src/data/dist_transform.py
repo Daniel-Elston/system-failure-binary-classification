@@ -34,12 +34,9 @@ class DistributionTransformer:
         df_transform = self.assign_transform()
         df = self.apply_transform(self.dataset, df_transform)
         return {'transformed-data': df}
-        # self.module_handler.save_data("transformed", round(df, 3))
 
     def assign_transform(self):
         """Assigns appropriate transformation based on skewness and kurtosis."""
-        # df = self.module_handler.load_data(
-        #     self.ctx.paths.get_path("raw_skew_kurt_store"))
         df = self.raw_data_skew_kurt
         df = df.rename(columns={0: "skewness", 1: "kurtosis"})
 

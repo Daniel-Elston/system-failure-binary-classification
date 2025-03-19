@@ -35,7 +35,6 @@ class DataPreprocessor:
             logging.info(f"Processing: {name}")
             df = func(df)
         return {'processed-data': df}
-        # self.module_handler.save_data("processed", df)
 
     def remove_duplicates(self, df):
         return df.drop_duplicates(keep='first')

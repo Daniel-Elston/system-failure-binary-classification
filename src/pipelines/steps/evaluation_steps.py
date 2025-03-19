@@ -7,7 +7,7 @@ from src.models.eval import EvaluateModel
 from src.plots.visuals import EvaluationVisuals
 
 
-def get_evaluation_definitions(modules: dict) -> list[StepDefinition]:
+def get_evaluation_steps(modules: dict) -> list[StepDefinition]:
     return [
         StepDefinition(
             name="evaluate-model",

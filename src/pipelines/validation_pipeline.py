@@ -4,7 +4,7 @@ from config.pipeline_context import PipelineContext
 from src.core.base_pipeline import BasePipeline
 from src.core.step_factory import StepFactory
 from src.core.step_definition import create_step_map
-from src.pipelines.step_definitions.checks_steps import get_validation_checks_definitions
+from src.pipelines.steps.checks_steps import get_validation_checks_steps
 
 
 class ValidationPipeline(BasePipeline):
@@ -24,7 +24,7 @@ class ValidationPipeline(BasePipeline):
         }
 
     def validate_names(self):
-        validation_definitions = get_validation_checks_definitions(self.modules)
+        validation_definitions = get_validation_checks_steps(self.modules)
         step_order = ["perform-validation-checks"]
         save_points = []
         factory = StepFactory(ctx=self.ctx, step_map=create_step_map(validation_definitions))

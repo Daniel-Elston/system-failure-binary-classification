@@ -8,7 +8,7 @@ from src.data.metadata import CollectMetadata
 from src.plots.visuals import ExploratoryVisuals
 
 
-def get_exploration_definitions(modules: dict, path_key: str) -> list[StepDefinition]:
+def get_exploration_steps(modules: dict, path_key: str) -> list[StepDefinition]:
     return [
         StepDefinition(
             name="collect-metadata",

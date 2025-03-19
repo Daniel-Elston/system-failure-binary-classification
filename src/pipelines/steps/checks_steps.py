@@ -6,7 +6,7 @@ from src.data_handling.lazy_load import LazyLoad
 from src.data.checks import ValidationChecks
 
 
-def get_validation_checks_definitions(modules: dict) -> list[StepDefinition]:
+def get_validation_checks_steps(modules: dict) -> list[StepDefinition]:
     return [
         StepDefinition(
             name="perform-validation-checks",

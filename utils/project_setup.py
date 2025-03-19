@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 from pathlib import Path
 from typing import Tuple
 
@@ -10,19 +9,24 @@ import yaml
 from config.pipeline_context import PipelineContext
 from utils.logging_config import setup_logging
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 def load_config(config_path: Path) -> dict:
     """Load and return the project configuration."""
     with open(config_path, "r", encoding="utf-8") as file:
         return yaml.safe_load(file)
 
-
-def initialize_project(
-    config_filename: str = "config/config.yaml",
+def initialise_project_configs(
+    config_filename: str = "config/logging.yaml",
     env_filename: str = ".env",
     log_filename: str = None,
 ) -> Tuple[Path, dict, PipelineContext]:
-    """Initialize the project environment, load configuration, set up logging, and create StateManager."""
+    """
+    Initialize the project environment, load configuration,
+    set up logging, and create PipelineContext.
+    """
     project_dir = Path(__file__).resolve().parents[1]
 
     # Load environment variables
@@ -34,27 +38,12 @@ def initialize_project(
 
     # Set up logging
     log_filename = log_filename or f"{Path(__file__).stem}.log"
-    setup_logging("DataPipeline", project_dir, log_filename, project_config)
+    setup_logging("MainPipeline", project_dir, log_filename, project_config)
 
-    # Initialize StateManager
-    state_manager = PipelineContext()
-
-    return project_dir, project_config, state_manager
+    # Initialize Pipeline Context
+    return PipelineContext()
 
 
-def get_logger(name: str) -> logging.Logger:
-    """Get a logger with the given name."""
-    return logging.getLogger(name)
-
-
-def init_project() -> Tuple[Path, dict, PipelineContext]:
-    """Set up project environment, configuration, logging, and StateManager."""
-    project_dir, project_config, state_manager = initialize_project()
-    logging.getLogger().setLevel(logging.DEBUG)
-    return project_dir, project_config, state_manager
-
-
-if __name__ == "__main__":
-    project_dir, project_config, state_manager, db_manager = init_project()
-    logging.info("Project setup completed successfully.")
-    logging.debug(f"StateManager initialized with: {state_manager}")
+# def init_project() -> Tuple[Path, dict, PipelineContext]:
+#     """Set up project environment, configuration, logging, and StateManager."""
+#     return initialise_project_configs()

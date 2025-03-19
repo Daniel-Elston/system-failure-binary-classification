@@ -1,18 +1,19 @@
 from __future__ import annotations
 
 import logging
+
 from src.core.base_pipeline import BasePipeline
-from typing import List
+from typing import List, Callable
 
 from utils.logging_utils import log_step
 from src.data_handling.lazy_load import LazyLoad
 
 
 class StepFactory(BasePipeline):
-    def __init__(self, ctx, step_map):
+    def __init__(self, ctx, step_map=None):
         super().__init__(ctx)
         self.ctx = ctx
-        self.step_map: dict = step_map
+        self.step_map: dict = step_map or {}
     
     def dispatch_step(self, step_name: str, **runtime_extra):
         try:
@@ -40,3 +41,8 @@ class StepFactory(BasePipeline):
             if step_name in checkpoints:
                 logging.debug(f"SAVING at checkpoint: {step_name}")
                 self.save_data(result)
+
+    def run_main(self, steps: List[Callable]):
+        """Decorates each step with log_step, then executes."""
+        for step in steps:
+            log_step()(step)()

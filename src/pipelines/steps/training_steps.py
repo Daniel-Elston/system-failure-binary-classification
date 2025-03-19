@@ -9,7 +9,7 @@ from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.model_selection import StratifiedKFold
 
 
-def get_training_definitions(
+def get_training_steps(
     modules: dict,
     pipeline_builder: ImbPipeline,
     skf: StratifiedKFold

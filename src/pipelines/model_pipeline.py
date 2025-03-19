@@ -4,8 +4,8 @@ from src.core.base_pipeline import BasePipeline
 from src.core.step_factory import StepFactory
 from src.core.step_definition import create_step_map
 from config.pipeline_context import PipelineContext
-from src.pipelines.step_definitions.training_steps import get_training_definitions
-from src.pipelines.step_definitions.evaluation_steps import get_evaluation_definitions
+from src.pipelines.steps.training_steps import get_training_steps
+from src.pipelines.steps.evaluation_steps import get_evaluation_steps
 
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.ensemble import RandomForestClassifier
@@ -52,14 +52,14 @@ class ModelPipeline(BasePipeline):
         )
 
     def train(self):
-        run_model_definitions = get_training_definitions(self.modules, self.pipeline_builder, self.skf)
+        run_model_definitions = get_training_steps(self.modules, self.pipeline_builder, self.skf)
         step_order = ["split-dataset", "train-model"]
         save_points = ["split-dataset", "train-model"]
         factory = StepFactory(ctx=self.ctx, step_map=create_step_map(run_model_definitions))
         factory.run_pipeline(step_order, save_points)
 
     def evaluate(self):
-        run_model_definitions = get_evaluation_definitions(self.modules)
+        run_model_definitions = get_evaluation_steps(self.modules)
         step_order = ["evaluate-model", "evaluation-visuals"]
         save_points = ["evaluate-model"]
         factory = StepFactory(ctx=self.ctx, step_map=create_step_map(run_model_definitions))

@@ -3,20 +3,16 @@ from __future__ import annotations
 import logging
 
 from config.pipeline_context import PipelineContext
-from src.core.base_pipeline import BasePipeline
-from src.pipelines.data_pipeline import DataPipeline
-from src.pipelines.model_pipeline import ModelPipeline
+from src.core.step_factory import StepFactory
 from src.pipelines.validation_pipeline import ValidationPipeline
 from src.pipelines.eda_pipeline import EDAPipeline
-from utils.project_setup import init_project
-import warnings
-warnings.filterwarnings("ignore")
+from src.pipelines.data_pipeline import DataPipeline
+from src.pipelines.model_pipeline import ModelPipeline
+from utils.project_setup import initialise_project_configs
 
 
 class MainPipeline:
-    def __init__(
-        self, ctx: PipelineContext,
-    ):
+    def __init__(self, ctx: PipelineContext):
         self.ctx = ctx
 
     def run(self):
@@ -29,11 +25,11 @@ class MainPipeline:
             ModelPipeline(self.ctx).train,
             ModelPipeline(self.ctx).evaluate
         ]
-        BasePipeline(self.ctx)._execute_steps(steps)
+        StepFactory(self.ctx).run_main(steps)
 
 
 if __name__ == "__main__":
-    project_dir, project_config, ctx = init_project()
+    ctx = initialise_project_configs()
     try:
         logging.info(f"Beginning Top-Level Pipeline from ``main.py``...\n{"=" * 125}")
         MainPipeline(ctx).run()

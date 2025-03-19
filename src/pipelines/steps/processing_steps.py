@@ -8,7 +8,7 @@ from src.features.build_features import BuildFeatures
 from src.data.dist_transform import DistributionTransformer
 
 
-def get_processing_definitions(modules: dict) -> list[StepDefinition]:
+def get_processing_steps(modules: dict) -> list[StepDefinition]:
     return [
         StepDefinition(
             name="processing",

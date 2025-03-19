@@ -4,7 +4,7 @@ from src.core.base_pipeline import BasePipeline
 from src.core.step_factory import StepFactory
 from src.core.step_definition import create_step_map
 from config.pipeline_context import PipelineContext
-from src.pipelines.step_definitions.processing_steps import get_processing_definitions
+from src.pipelines.steps.processing_steps import get_processing_steps
 
 
 class DataPipeline(BasePipeline):
@@ -18,7 +18,7 @@ class DataPipeline(BasePipeline):
         }
 
     def process(self):
-        initial_process_definitions = get_processing_definitions(self.modules)
+        initial_process_definitions = get_processing_steps(self.modules)
         step_order = [
             "processing",
             "build-features",

@@ -3,6 +3,7 @@ from __future__ import annotations
 import attrs
 from typing import Type, List
 
+
 @attrs.define
 class StepDefinition:
     name: str

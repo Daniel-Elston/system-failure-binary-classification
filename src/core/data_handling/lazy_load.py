@@ -19,7 +19,6 @@ class LazyLoad:
         if self.dm is None:
             raise AttributeError("`NoneType` object. Verify module path keys, and path config keys")
         try:
-            # return DataModuleHandler(self).load_dm(self.dm)
             return dm_handler.load_dm(self.dm)
         except Exception as e:
             raise ValueError(f"Failed to load data from {self.dm.data_path}: {e}")

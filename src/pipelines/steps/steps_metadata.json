@@ -1,1 +1,148 @@
-{"checks": [{"step_n": 1, "name": "perform-validation-checks", "step_class": "ValidationChecks", "args": {"dataset": "raw-data"}, "outputs": []}], "evaluation": [{"step_n": 1, "name": "evaluate-model", "step_class": "EvaluateModel", "args": {"x_train": "x-train-selected", "x_test": "x-test-selected", "y_train": "y-train", "y_test": "y-test", "model": "model"}, "outputs": ["y-test-pred"]}, {"step_n": 2, "name": "evaluation-visuals", "step_class": "EvaluationVisuals", "args": {"x_test": "x-test-selected", "y_test": "y-test", "y_test_pred": "y-test-pred", "model": "model", "path_key": "evaluation"}, "outputs": []}], "exploration": [{"step_n": 1, "name": "collect-metadata", "step_class": "CollectMetadata", "args": {"dataset": "raw-data", "path_key": "Optional[raw-data, transformed-data]"}, "outputs": []}, {"step_n": 2, "name": "perform-quality-checks", "step_class": "DataQualityChecks", "args": {"dataset": "raw-data", "path_key": "Optional[raw-data, transformed-data]"}, "outputs": ["raw-data-skew-kurt"]}, {"step_n": 3, "name": "generate-visuals", "step_class": "ExploratoryVisuals", "args": {"dataset": "raw-data", "path_key": "Optional[raw-data, transformed-data]"}, "outputs": []}], "processing": [{"step_n": 1, "name": "processing", "step_class": "DataPreprocessor", "args": {"dataset": "raw-data"}, "outputs": ["processed-data"]}, {"step_n": 2, "name": "build-features", "step_class": "BuildFeatures", "args": {"dataset": "processed-data"}, "outputs": ["feature-eng"]}, {"step_n": 3, "name": "transform-distributions", "step_class": "DistributionTransformer", "args": {"dataset": "feature-eng", "raw_data_skew_kurt": "raw-data-skew-kurt"}, "outputs": ["transformed-data"]}], "training": [{"step_n": 1, "name": "split-dataset", "step_class": "DatasetSplitter", "args": {"dataset": "transformed-data"}, "outputs": ["x-train", "x-test", "y-train", "y-test"]}, {"step_n": 2, "name": "train-model", "step_class": "ModelTrainer", "args": {"x_train": "x-train", "x_test": "x-test", "y_train": "y-train", "y_test": "y-test", "pipeline_builder": "Pipeline", "skf": "StratifiedKFold"}, "outputs": ["selected-features", "x-train-selected", "x-test-selected", "model"]}]}
+{
+    "checks": [
+        {
+            "step_n": 1,
+            "name": "perform-validation-checks",
+            "step_class": "ValidationChecks",
+            "args": {
+                "dataset": "raw-data"
+            },
+            "outputs": []
+        }
+    ],
+    "evaluation": [
+        {
+            "step_n": 1,
+            "name": "evaluate-model",
+            "step_class": "EvaluateModel",
+            "args": {
+                "x_train": "x-train-selected",
+                "x_test": "x-test-selected",
+                "y_train": "y-train",
+                "y_test": "y-test",
+                "model": "model"
+            },
+            "outputs": [
+                "y-test-pred"
+            ]
+        },
+        {
+            "step_n": 2,
+            "name": "evaluation-visuals",
+            "step_class": "EvaluationVisuals",
+            "args": {
+                "x_test": "x-test-selected",
+                "y_test": "y-test",
+                "y_test_pred": "y-test-pred",
+                "model": "model",
+                "path_key": "evaluation"
+            },
+            "outputs": []
+        }
+    ],
+    "exploration": [
+        {
+            "step_n": 1,
+            "name": "collect-metadata",
+            "step_class": "CollectMetadata",
+            "args": {
+                "dataset": "raw-data",
+                "path_key": "Optional[raw-data, transformed-data]"
+            },
+            "outputs": []
+        },
+        {
+            "step_n": 2,
+            "name": "perform-quality-checks",
+            "step_class": "DataQualityChecks",
+            "args": {
+                "dataset": "raw-data",
+                "path_key": "Optional[raw-data, transformed-data]"
+            },
+            "outputs": [
+                "raw-data-skew-kurt"
+            ]
+        },
+        {
+            "step_n": 3,
+            "name": "generate-visuals",
+            "step_class": "ExploratoryVisuals",
+            "args": {
+                "dataset": "raw-data",
+                "path_key": "Optional[raw-data, transformed-data]"
+            },
+            "outputs": []
+        }
+    ],
+    "processing": [
+        {
+            "step_n": 1,
+            "name": "processing",
+            "step_class": "DataPreprocessor",
+            "args": {
+                "dataset": "raw-data"
+            },
+            "outputs": [
+                "processed-data"
+            ]
+        },
+        {
+            "step_n": 2,
+            "name": "build-features",
+            "step_class": "BuildFeatures",
+            "args": {
+                "dataset": "processed-data"
+            },
+            "outputs": [
+                "feature-eng"
+            ]
+        },
+        {
+            "step_n": 3,
+            "name": "transform-distributions",
+            "step_class": "DistributionTransformer",
+            "args": {
+                "dataset": "feature-eng",
+                "raw_data_skew_kurt": "raw-data-skew-kurt"
+            },
+            "outputs": [
+                "transformed-data"
+            ]
+        }
+    ],
+    "training": [
+        {
+            "step_n": 1,
+            "name": "split-dataset",
+            "step_class": "DatasetSplitter",
+            "args": {
+                "dataset": "transformed-data"
+            },
+            "outputs": [
+                "x-train",
+                "x-test",
+                "y-train",
+                "y-test"
+            ]
+        },
+        {
+            "step_n": 2,
+            "name": "train-model",
+            "step_class": "ModelTrainer",
+            "args": {
+                "x_train": "x-train",
+                "x_test": "x-test",
+                "y_train": "y-train",
+                "y_test": "y-test",
+                "pipeline_builder": "Pipeline",
+                "skf": "StratifiedKFold"
+            },
+            "outputs": [
+                "selected-features",
+                "x-train-selected",
+                "x-test-selected",
+                "model"
+            ]
+        }
+    ]
+}

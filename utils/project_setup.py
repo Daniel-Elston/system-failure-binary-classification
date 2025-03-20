@@ -42,8 +42,3 @@ def initialise_project_configs(
 
     # Initialize Pipeline Context
     return PipelineContext()
-
-
-# def init_project() -> Tuple[Path, dict, PipelineContext]:
-#     """Set up project environment, configuration, logging, and StateManager."""
-#     return initialise_project_configs()

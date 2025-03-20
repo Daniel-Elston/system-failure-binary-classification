@@ -10,8 +10,6 @@ from lightgbm import LGBMClassifier
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 
-# from config.factory import Factory
-
 
 class Factory:
     def __init__(self):
@@ -93,10 +91,6 @@ class Config:
     iqr_upper: float = attr.ib(default=0.01)
     iqr_lower: float = attr.ib(default=0.99)
 
-    # def __attrs_post_init__(self):
-    #     attr_dict = attr.asdict(self)
-    #     logging.debug(f"{self.__class__.__name__}:\n{pformat(attr_dict)}\n")
-
 
 @attr.s
 class Params:
@@ -119,10 +113,6 @@ class Params:
         """Uses SamplerFactory to instantiate the sampler dynamically."""
         return Factory.create_sampler(self.target_sample_technique, self.sampling_params)
 
-    # def __attrs_post_init__(self):
-    #     attr_dict = attr.asdict(self)
-    #     logging.debug(f"{self.__class__.__name__}:\n{pformat(attr_dict)}\n")
-
 
 @attr.s
 class HyperParams:
@@ -139,10 +129,6 @@ class HyperParams:
         'classifier__scale_pos_weight': [1, 3, 5, 7]
     })
 
-    # def __attrs_post_init__(self):
-    #     attr_dict = attr.asdict(self)
-    #     logging.debug(f"{self.__class__.__name__}:\n{pformat(attr_dict)}\n")
-
 
 @attr.s
 class Settings:
@@ -154,58 +140,3 @@ class Settings:
     def __attrs_post_init__(self):
         attr_dict = attr.asdict(self)
         logging.debug(f"{self.__class__.__name__}:\n{pformat(attr_dict)}\n")
-
-
-# @attr.s
-# class Config:
-#     write_output: bool = attr.ib(default=True)
-#     overwrite: bool = attr.ib(default=True)
-#     save_fig: bool = attr.ib(default=True)
-
-#     def __attrs_post_init__(self):
-#         attr_dict = attr.asdict(self)
-#         logging.debug(f"DataConfig:\n{pformat(attr_dict)}\n")
-
-
-# @attr.s
-# class Params:
-#     chunk_size: int = attr.ib(default=1000)
-#     chunk_overlap: int = attr.ib(default=50)
-#     truncation: bool = attr.ib(default=True)
-#     max_input_seq_length: int = attr.ib(default=512)
-#     max_output_seq_length: int = attr.ib(default=512)
-#     separators: list = attr.ib(
-#         default=["\n\n", "\n", ".", ";", ",", " ", ""]
-#     )
-#     embedding_model_name: str = attr.ib(
-#         default="sentence-transformers/all-MiniLM-L6-v2"
-#     )
-#     language_model_name: str = attr.ib(
-#         default="google/flan-t5-base"
-#     )
-
-#     def __attrs_post_init__(self):
-#         attr_dict = attr.asdict(self)
-#         logging.debug(f"ModelConfig:\n{pformat(attr_dict)}\n")
-
-
-# @attr.s
-# class HyperParams:
-#     pass
-
-#     def __attrs_post_init__(self):
-#         # attr_dict = attr.asdict(self)
-#         # logging.debug(f"ModelConfig:\n{pformat(attr_dict)}\n")
-#         pass
-
-
-# @attr.s
-# class Settings:
-#     """config, params, hyper_params"""
-#     config: Config = attr.ib(factory=Config)
-#     params: Params = attr.ib(factory=Params)
-#     hyperparams: HyperParams = attr.ib(factory=HyperParams)
-
-#     def __attrs_post_init__(self):
-#         attr_dict = attr.asdict(self)
-#         logging.debug(f"ExperimentConfig:\n{pformat(attr_dict)}\n")

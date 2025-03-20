@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import numpy as np
-import seaborn as sns
 from scipy.stats import boxcox
 from scipy.stats import yeojohnson
 
@@ -9,7 +8,6 @@ from config.paths import Paths
 from config.pipeline_context import PipelineContext
 from config.settings import Config
 from src.core.data_handling.data_module import DataModule
-sns.set_style("darkgrid")
 
 
 class DistributionTransformer:

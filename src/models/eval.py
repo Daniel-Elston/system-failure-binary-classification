@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 
 import numpy as np
-import seaborn as sns
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.model_selection import cross_val_score
 
@@ -14,7 +13,6 @@ from config.settings import HyperParams
 from config.settings import Params
 from src.core.base_pipeline import BasePipeline
 from src.core.data_handling.data_module import DataModule
-sns.set_style("darkgrid")
 
 
 class EvaluateModel(BasePipeline):

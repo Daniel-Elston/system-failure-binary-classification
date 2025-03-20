@@ -1,4 +1,3 @@
-# LOGGING
 logging:
   root_level: DEBUG
   file_level: DEBUG

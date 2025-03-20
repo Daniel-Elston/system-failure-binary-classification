@@ -4,7 +4,7 @@ import logging
 import json
 from pathlib import Path
 from utils.file_access import FileAccess
-from src.core.step_registry import StepRegistry
+from src.core.step_handling.step_registry import StepRegistry
 
 from src.pipelines.steps.checks_steps import get_validation_checks_steps
 from src.pipelines.steps.exploration_steps import get_exploration_steps

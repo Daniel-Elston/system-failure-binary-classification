@@ -6,8 +6,8 @@ import pandas as pd
 
 from config.pipeline_context import PipelineContext
 from src.core.base_pipeline import BasePipeline
-from src.data_handling.data_dict import RawDataDict
-from src.data_handling.data_module import DataModule
+from src.core.data_handling.data_dict import RawDataDict
+from src.core.data_handling.data_module import DataModule
 
 pd.set_option("display.max_columns", None)
 

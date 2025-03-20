@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from src.core.step_definition import StepDefinition
-from src.data_handling.lazy_load import LazyLoad
+from src.core.step_handling.step_definition import StepDefinition
+from src.core.data_handling.lazy_load import LazyLoad
 
 from src.models.split_dataset import DatasetSplitter
 from src.models.trainer import ModelTrainer
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.model_selection import StratifiedKFold
 
-from src.core.step_registry import StepRegistry
+from src.core.step_handling.step_registry import StepRegistry
 
 
 @StepRegistry.register(

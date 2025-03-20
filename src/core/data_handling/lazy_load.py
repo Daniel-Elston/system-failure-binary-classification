@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import attrs
-from src.data_handling.data_module_handler import DataModuleHandler
-from src.data_handling.data_module import DataModule
+from src.core.data_handling.data_module_handler import DataModuleHandler
+from src.core.data_handling.data_module import DataModule
 
 
 @attrs.define

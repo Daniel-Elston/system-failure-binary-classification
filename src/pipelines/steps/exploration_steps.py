@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from src.core.step_definition import StepDefinition
-from src.data_handling.lazy_load import LazyLoad
+from src.core.step_handling.step_definition import StepDefinition
+from src.core.data_handling.lazy_load import LazyLoad
 
 from src.data.exploration import DataQualityChecks
 from src.data.metadata import CollectMetadata
 from src.plots.visuals import ExploratoryVisuals
-from src.core.step_registry import StepRegistry
+from src.core.step_handling.step_registry import StepRegistry
 
 
 @StepRegistry.register(

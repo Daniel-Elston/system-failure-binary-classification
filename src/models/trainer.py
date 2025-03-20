@@ -14,7 +14,7 @@ from config.pipeline_context import PipelineContext
 from config.settings import Config
 from config.settings import HyperParams
 from src.core.base_pipeline import BasePipeline
-from src.data_handling.data_module import DataModule
+from src.core.data_handling.data_module import DataModule
 
 
 class ModelTrainer(BasePipeline):

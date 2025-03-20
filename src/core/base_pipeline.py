@@ -10,7 +10,7 @@ from config.settings import Params
 from config.states import DataState
 from config.states import ModelState
 from config.states import States
-from src.data_handling.data_module_handler import DataModuleHandler
+from src.core.data_handling.data_module_handler import DataModuleHandler
 
 
 class BasePipeline(ABC):

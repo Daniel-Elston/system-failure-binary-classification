@@ -6,7 +6,7 @@ from src.core.base_pipeline import BasePipeline
 from typing import List, Callable
 
 from utils.logging_utils import log_step
-from src.data_handling.lazy_load import LazyLoad
+from src.core.data_handling.lazy_load import LazyLoad
 
 
 class StepFactory(BasePipeline):

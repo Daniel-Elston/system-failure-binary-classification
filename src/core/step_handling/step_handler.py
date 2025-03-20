@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import attrs
 from typing import Any, Callable, Dict, List
-from src.core.step_definition import StepDefinition
+from src.core.step_handling.step_definition import StepDefinition
 
 from src.pipelines.steps import (
     checks_steps,

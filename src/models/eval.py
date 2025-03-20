@@ -13,7 +13,7 @@ from config.settings import Config
 from config.settings import HyperParams
 from config.settings import Params
 from src.core.base_pipeline import BasePipeline
-from src.data_handling.data_module import DataModule
+from src.core.data_handling.data_module import DataModule
 sns.set_style("darkgrid")
 
 

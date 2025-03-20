@@ -8,7 +8,7 @@ from scipy.stats import yeojohnson
 from config.paths import Paths
 from config.pipeline_context import PipelineContext
 from config.settings import Config
-from src.data_handling.data_module import DataModule
+from src.core.data_handling.data_module import DataModule
 sns.set_style("darkgrid")
 
 

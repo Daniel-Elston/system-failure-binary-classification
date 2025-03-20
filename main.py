@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 # from pprint import pprint
 from config.pipeline_context import PipelineContext
-from src.core.step_factory import StepFactory
+from src.core.step_handling.step_factory import StepFactory
 from src.pipelines.validation_pipeline import ValidationPipeline
 from src.pipelines.eda_pipeline import EDAPipeline
 from src.pipelines.data_pipeline import DataPipeline

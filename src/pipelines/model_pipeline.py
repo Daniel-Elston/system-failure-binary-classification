@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from src.core.base_pipeline import BasePipeline
-from src.core.step_factory import StepFactory
+from src.core.step_handling.step_factory import StepFactory
 from config.pipeline_context import PipelineContext
-from src.core.step_handler import StepHandler
+from src.core.step_handling.step_handler import StepHandler
 
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.ensemble import RandomForestClassifier

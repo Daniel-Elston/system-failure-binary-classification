@@ -11,7 +11,7 @@ from config.pipeline_context import PipelineContext
 from config.settings import Config
 from config.settings import HyperParams
 from config.settings import Params
-from src.data_handling.data_module import DataModule
+from src.core.data_handling.data_module import DataModule
 
 
 class DatasetSplitter:

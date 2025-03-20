@@ -1,17 +1,18 @@
 from __future__ import annotations
 
 import logging
-# from pprint import pprint
+
 from config.pipeline_context import PipelineContext
 from src.core.step_handling.step_factory import StepFactory
-from src.pipelines.validation_pipeline import ValidationPipeline
-from src.pipelines.eda_pipeline import EDAPipeline
 from src.pipelines.data_pipeline import DataPipeline
+from src.pipelines.eda_pipeline import EDAPipeline
 from src.pipelines.model_pipeline import ModelPipeline
+from src.pipelines.steps.steps_debugger import debug_steps
+from src.pipelines.validation_pipeline import ValidationPipeline
 from utils.project_setup import initialise_project_configs
+# from pprint import pprint
 # from src.core.step_registry import StepRegistry
 # from src.pipelines.steps.training_steps import get_training_steps
-from src.pipelines.steps.steps_debugger import debug_steps
 
 
 class MainPipeline:

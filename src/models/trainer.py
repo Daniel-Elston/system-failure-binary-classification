@@ -43,7 +43,7 @@ class ModelTrainer(BasePipeline):
 
     def run(self):
         y_train = self.y_train.values.ravel()
-        y_test = self.y_test.values.ravel()
+        # y_test = self.y_test.values.ravel()
         model, selected_indices = self.train_model(self.x_train, y_train)
 
         x_train_selected = self.x_train.iloc[:, selected_indices]

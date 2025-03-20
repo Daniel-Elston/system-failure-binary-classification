@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from pprint import pformat
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,13 +13,12 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import roc_curve
-from ydata_profiling import ProfileReport
-from pprint import pformat
 
 from config.pipeline_context import PipelineContext
 from config.settings import Config
 from src.core.base_pipeline import BasePipeline
 from src.core.data_handling.data_module import DataModule
+# from ydata_profiling import ProfileReport
 sns.set_style("darkgrid")
 
 
@@ -35,7 +35,6 @@ class ExploratoryVisuals:
         self.path_key = path_key
         self.config: Config = ctx.settings.config
 
-
     def run(self):
         col_sets = {
             "numeric_info_cols": self.config.col_types['numeric_info_cols'],
@@ -45,7 +44,7 @@ class ExploratoryVisuals:
             for name, cols in col_sets.items():
                 method(name, cols)
         [self.generate_corr_plot(method) for method in ["pearson", "spearman"]]
-    
+
     def generate_target_barplot(self):
         plt.figure(figsize=(8, 6))
         sns.countplot(

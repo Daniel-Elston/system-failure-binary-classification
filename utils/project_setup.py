@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from pathlib import Path
 from typing import Tuple
 
@@ -8,8 +9,6 @@ import yaml
 
 from config.pipeline_context import PipelineContext
 from utils.logging_config import setup_logging
-
-import warnings
 warnings.filterwarnings("ignore")
 
 
@@ -17,6 +16,7 @@ def load_config(config_path: Path) -> dict:
     """Load and return the project configuration."""
     with open(config_path, "r", encoding="utf-8") as file:
         return yaml.safe_load(file)
+
 
 def initialise_project_configs(
     config_filename: str = "config/logging.yaml",

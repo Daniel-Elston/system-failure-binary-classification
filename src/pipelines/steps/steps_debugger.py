@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-import logging
 import json
+import logging
 from pathlib import Path
-from utils.file_access import FileAccess
-from src.core.step_handling.step_registry import StepRegistry
 
+from src.core.step_handling.step_registry import StepRegistry
 from src.pipelines.steps.checks_steps import get_validation_checks_steps
+from src.pipelines.steps.evaluation_steps import get_evaluation_steps
 from src.pipelines.steps.exploration_steps import get_exploration_steps
 from src.pipelines.steps.processing_steps import get_processing_steps
-from src.pipelines.steps.exploration_steps import get_exploration_steps
 from src.pipelines.steps.training_steps import get_training_steps
-from src.pipelines.steps.evaluation_steps import get_evaluation_steps
+from utils.file_access import FileAccess
+
 
 def debug_steps():
     steps = StepRegistry.list_all_steps()

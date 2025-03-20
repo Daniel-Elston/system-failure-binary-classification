@@ -29,12 +29,12 @@ class EvaluateModel(BasePipeline):
         super().__init__(ctx)
         self.ctx = ctx
         self.best_pipeline = model
-        
+
         self.x_train_fs = x_train
         self.x_test_fs = x_test
         self.y_train = y_train
         self.y_test = y_test
-        
+
         self.model = model
         self.config: Config = ctx.settings.config
         self.paths: Paths = ctx.paths

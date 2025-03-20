@@ -16,6 +16,7 @@ class ValidationPipeline(BasePipeline):
     Output: Dataset containing only exercise names not present in mapping
     Output Path Idx: name-errors
     """
+
     def __init__(self, ctx: PipelineContext):
         super().__init__(ctx)
         self.modules = {

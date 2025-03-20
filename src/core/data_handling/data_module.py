@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 from config.pipeline_context import PipelineContext
 from config.states import DataState
 from utils.file_access import FileAccess
-from typing import Optional
 
 
 class DataModule:
@@ -24,12 +24,12 @@ class DataModule:
         ----------
             - Load data from either in-memory state or a local file.
             - Save data to either in-memory state or a local file.
-            - Apply data dictionary transformations if provided.    
-        
+            - Apply data dictionary transformations if provided.
+
         Outputs
         ----------
             - Data accessible from in-memory state or local file (optionally transformed).
-        
+
         Parameters
         ----------
         ctx : PipelineContext
@@ -40,12 +40,12 @@ class DataModule:
             _description_, by default None
         data_dict : dict, optional
             _description_, by default None
-        
+
         Raises
         ------
         ValueError
             _description_
-        """        
+        """
 
         if not state_key and not data_path:
             raise ValueError("Either `state_key` or `data_path` must be provided.")

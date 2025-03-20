@@ -73,7 +73,7 @@ class ValidationChecks(BasePipeline):
             f"Expected {len(self.dataset.columns)} columns. DataDict uses dtype length {len(self.expected_dtypes)}."
         )
         assert len(self.dataset.columns) == len(numeric_cols) + len(str_cols), (
-            f"Numeric and non-numeric columns do not add up to total columns."
+            "Numeric and non-numeric columns do not add up to total columns."
         )
         return no_expect_nulls, numeric_cols, float_cols, int_cols, str_cols
 

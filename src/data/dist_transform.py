@@ -21,7 +21,7 @@ class DistributionTransformer:
         self.ctx = ctx
         self.dataset = dataset
         self.raw_data_skew_kurt = raw_data_skew_kurt
-        
+
         self.config: Config = ctx.settings.config
         self.paths: Paths = ctx.paths
 

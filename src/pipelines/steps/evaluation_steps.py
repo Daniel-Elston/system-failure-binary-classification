@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from src.core.step_handling.step_definition import StepDefinition
 from src.core.data_handling.lazy_load import LazyLoad
-
+from src.core.step_handling.step_definition import StepDefinition
+from src.core.step_handling.step_registry import StepRegistry
 from src.models.eval import EvaluateModel
 from src.plots.visuals import EvaluationVisuals
-from src.core.step_handling.step_registry import StepRegistry
 
 
 @StepRegistry.register(
@@ -34,8 +33,6 @@ from src.core.step_handling.step_registry import StepRegistry
     },
     outputs=["y-test-pred"],
 )
-
-
 def get_evaluation_steps(modules: dict) -> list[StepDefinition]:
     return [
         StepDefinition(

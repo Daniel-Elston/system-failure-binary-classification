@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from src.core.step_handling.step_definition import StepDefinition
 from src.core.data_handling.lazy_load import LazyLoad
-
-from src.data.checks import ValidationChecks
+from src.core.step_handling.step_definition import StepDefinition
 from src.core.step_handling.step_registry import StepRegistry
+from src.data.checks import ValidationChecks
 
 
 @StepRegistry.register(
@@ -14,7 +13,6 @@ from src.core.step_handling.step_registry import StepRegistry
     args={"dataset": "raw-data"},
     outputs=[],
 )
-
 def get_validation_checks_steps(modules: dict) -> list[StepDefinition]:
     return [
         StepDefinition(

@@ -11,6 +11,7 @@ import colorlog
 FILE_TRACK = 15
 logging.addLevelName(FILE_TRACK, "FILE_TRACK")
 
+
 def file_track(self, message, *args, **kwargs):
     if self.isEnabledFor(FILE_TRACK):
         self._log(FILE_TRACK, message, args, **kwargs)

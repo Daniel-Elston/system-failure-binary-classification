@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from src.core.step_handling.step_definition import StepDefinition
-from src.core.data_handling.lazy_load import LazyLoad
-
-from src.models.split_dataset import DatasetSplitter
-from src.models.trainer import ModelTrainer
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.model_selection import StratifiedKFold
 
+from src.core.data_handling.lazy_load import LazyLoad
+from src.core.step_handling.step_definition import StepDefinition
 from src.core.step_handling.step_registry import StepRegistry
+from src.models.split_dataset import DatasetSplitter
+from src.models.trainer import ModelTrainer
 
 
 @StepRegistry.register(
@@ -32,7 +31,6 @@ from src.core.step_handling.step_registry import StepRegistry
     args={"dataset": "transformed-data"},
     outputs=["x-train", "x-test", "y-train", "y-test"],
 )
-
 def get_training_steps(
     modules: dict,
     pipeline_builder: ImbPipeline,

@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import logging
+from typing import Callable
+from typing import List
 
 from src.core.base_pipeline import BasePipeline
-from typing import List, Callable
-
-from utils.logging_utils import log_step
 from src.core.data_handling.lazy_load import LazyLoad
+from utils.logging_utils import log_step
 
 
 class StepFactory(BasePipeline):
@@ -20,7 +20,7 @@ class StepFactory(BasePipeline):
             StepClass, base_args, method_name = self.step_map[step_name]
         except KeyError:
             raise ValueError(f"Unknown step `{step_name}`. Check step definitions.")
-        
+
         resolved_args = {}
         for k, v in base_args.items():
             if isinstance(v, LazyLoad):

@@ -11,6 +11,8 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 
 # from config.factory import Factory
+
+
 class Factory:
     def __init__(self):
         attr_dict = attr.asdict(self)
@@ -152,12 +154,6 @@ class Settings:
     def __attrs_post_init__(self):
         attr_dict = attr.asdict(self)
         logging.debug(f"{self.__class__.__name__}:\n{pformat(attr_dict)}\n")
-
-
-
-
-
-
 
 
 # @attr.s

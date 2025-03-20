@@ -1,8 +1,10 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List
 from collections import defaultdict
 from functools import wraps
+from typing import Any
+from typing import Dict
+from typing import List
 
 
 class StepRegistry:
@@ -46,11 +48,6 @@ class StepRegistry:
     @classmethod
     def list_all_steps(cls) -> Dict[str, List[Dict[str, Any]]]:
         return dict(cls._registry)
-
-
-
-
-
 
 
 # from typing import Any, Callable, Dict, List

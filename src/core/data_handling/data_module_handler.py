@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import logging
+from typing import Any
 from typing import Dict
 
 import pandas as pd
@@ -8,12 +8,12 @@ import pandas as pd
 from config.pipeline_context import PipelineContext
 from src.core.data_handling.data_dict import RawDataDict
 from src.core.data_handling.data_module import DataModule
-from typing import Any
 
 
 module_map: Dict[str, dict] = {
     "raw-data": RawDataDict(),
 }
+
 
 class DataModuleHandler:
     def __init__(
@@ -23,24 +23,24 @@ class DataModuleHandler:
         _summary_
         ----------
         Manages retrieval of DataModules. Instantiates DataModules and allows interaction.
-        
+
         _extended_summary_
         ----------
             - Load data from a specified DataModule.
             - Save data to a specified DataModule.
             - Get DataModule instance, or create it if it doesn't exist.
-        
+
         Outputs
         ----------
             - Data accessible from DataModules.
             - Data saved to DataModules.
             - Instantiated DataModules.
-        
+
         Parameters
         ----------
         ctx : PipelineContext
             _description_
-        """        
+        """
         self.ctx = ctx
         self.modules: Dict[str, DataModule] = {}
         self.module_map: Dict[str, dict] = module_map

@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-import attrs
-from typing import Any, Callable, Dict, List
-from src.core.step_handling.step_definition import StepDefinition
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
 
-from src.pipelines.steps import (
-    checks_steps,
-    evaluation_steps,
-    exploration_steps,
-    processing_steps,
-    training_steps,
-)
+from src.core.step_handling.step_definition import StepDefinition
+from src.pipelines.steps import checks_steps
+from src.pipelines.steps import evaluation_steps
+from src.pipelines.steps import exploration_steps
+from src.pipelines.steps import processing_steps
+from src.pipelines.steps import training_steps
 
 
 class StepHandler:

@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from src.core.step_handling.step_definition import StepDefinition
 from src.core.data_handling.lazy_load import LazyLoad
-
+from src.core.step_handling.step_definition import StepDefinition
+from src.core.step_handling.step_registry import StepRegistry
 from src.data.exploration import DataQualityChecks
 from src.data.metadata import CollectMetadata
 from src.plots.visuals import ExploratoryVisuals
-from src.core.step_handling.step_registry import StepRegistry
 
 
 @StepRegistry.register(
@@ -30,7 +29,6 @@ from src.core.step_handling.step_registry import StepRegistry
     args={"dataset": "raw-data", "path_key": "Optional[raw-data, transformed-data]"},
     outputs=[],
 )
-
 def get_exploration_steps(modules: dict, path_key: str) -> list[StepDefinition]:
     return [
         StepDefinition(

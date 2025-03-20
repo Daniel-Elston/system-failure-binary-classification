@@ -39,7 +39,7 @@ class CollectMetadata:
 
             f.write("\n\nDataset Description:\n")
             f.write(round(self.dataset.describe(), 3).to_string() + "\n")
-    
+
     def output_metadata(self):
         logging.debug(f"Head of the dataset:\n{self.dataset.head()}")
         logging.debug(f"\n\nDataset Info:\n{self.dataset.info()}")

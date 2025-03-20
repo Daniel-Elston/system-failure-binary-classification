@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from src.core.step_handling.step_definition import StepDefinition
 from src.core.data_handling.lazy_load import LazyLoad
-
+from src.core.step_handling.step_definition import StepDefinition
+from src.core.step_handling.step_registry import StepRegistry
+from src.data.dist_transform import DistributionTransformer
 from src.data.process import DataPreprocessor
 from src.features.build_features import BuildFeatures
-from src.data.dist_transform import DistributionTransformer
-from src.core.step_handling.step_registry import StepRegistry
 
 
 @StepRegistry.register(
@@ -30,8 +29,6 @@ from src.core.step_handling.step_registry import StepRegistry
     args={"dataset": "raw-data"},
     outputs=["processed-data"],
 )
-
-
 def get_processing_steps(modules: dict) -> list[StepDefinition]:
     return [
         StepDefinition(

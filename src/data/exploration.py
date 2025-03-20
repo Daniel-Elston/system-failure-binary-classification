@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import logging
+from pprint import pformat
 
 import numpy as np
 import seaborn as sns
-from pprint import pformat
+
 from config.pipeline_context import PipelineContext
 from config.settings import Config
 from src.core.data_handling.data_module import DataModule

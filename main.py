@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-
+# from pprint import pprint
 from config.pipeline_context import PipelineContext
 from src.core.step_factory import StepFactory
 from src.pipelines.validation_pipeline import ValidationPipeline
@@ -9,6 +9,9 @@ from src.pipelines.eda_pipeline import EDAPipeline
 from src.pipelines.data_pipeline import DataPipeline
 from src.pipelines.model_pipeline import ModelPipeline
 from utils.project_setup import initialise_project_configs
+# from src.core.step_registry import StepRegistry
+# from src.pipelines.steps.training_steps import get_training_steps
+from src.pipelines.steps.steps_debugger import debug_steps
 
 
 class MainPipeline:
@@ -26,6 +29,9 @@ class MainPipeline:
             ModelPipeline(self.ctx).evaluate
         ]
         StepFactory(self.ctx).run_main(steps)
+        debug_steps()
+
+        # pprint(StepRegistry.list_all_steps())
 
 
 if __name__ == "__main__":
@@ -34,4 +40,4 @@ if __name__ == "__main__":
         logging.info(f"Beginning Top-Level Pipeline from ``main.py``...\n{"=" * 125}")
         MainPipeline(ctx).run()
     except Exception as e:
-        logging.error(f"{e}", exc_info=True)
+        logging.error(f"{e}", exc_info=False)

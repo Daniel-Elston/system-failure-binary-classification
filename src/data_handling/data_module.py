@@ -7,6 +7,7 @@ from config.states import DataState
 from utils.file_access import FileAccess
 from typing import Optional
 
+
 class DataModule:
     def __init__(
         self, ctx: PipelineContext,
@@ -17,8 +18,8 @@ class DataModule:
         """
         _summary_
         ----------
-        Class to handle data storage, with optional data dictionary transformations applied.
-        
+        Handles load/save to memory/disk, with optional data dictionary transformations applied.
+
         _extended_summary_
         ----------
             - Load data from either in-memory state or a local file.
@@ -58,9 +59,9 @@ class DataModule:
     def load(self):
         """Load data either from the in-memory state or a local file"""
         if self.state_key:
-            data = self.load_from_state()
+            data = self._load_from_state()
         elif self.data_path and self.data_path.exists():
-            data = self.load_from_file()
+            data = self._load_from_file()
         else:
             raise ValueError(
                 f"Unable to load data. `state_key`: {self.state_key}, `data_path`: {self.data_path}"
@@ -71,25 +72,13 @@ class DataModule:
     def save(self, data):
         """Save data either to the in-memory state or a local file"""
         if self.state_key:
-            self.save_to_state(data)
+            self._save_to_state(data)
         elif self.data_path:
-            self.save_to_file(data)
+            self._save_to_file(data)
         else:
             raise ValueError(
                 f"Unable to save data. `state_key`: {self.state_key}, `data_path`: {self.data_path}"
             )
-
-    def load_from_file(self):
-        return FileAccess.load_file(self.data_path)
-
-    def save_to_file(self, data):
-        FileAccess.save_file(data, self.data_path)
-
-    def load_from_state(self):
-        return self.data_state.get(self.state_key)
-
-    def save_to_state(self, data):
-        self.data_state.set(self.state_key, data)
 
     def apply_data_dict(self, df):
         """Apply data dictionary transformations in the correct order"""
@@ -99,3 +88,15 @@ class DataModule:
         for func_name, func in transforms.items():
             df = func(df)
         return df
+
+    def _load_from_file(self):
+        return FileAccess.load_file(self.data_path)
+
+    def _save_to_file(self, data):
+        FileAccess.save_file(data, self.data_path)
+
+    def _load_from_state(self):
+        return self.data_state.get(self.state_key)
+
+    def _save_to_state(self, data):
+        self.data_state.set(self.state_key, data)

@@ -2,23 +2,23 @@ from __future__ import annotations
 
 from src.core.base_pipeline import BasePipeline
 from src.core.step_factory import StepFactory
-from src.core.step_definition import create_step_map
 from config.pipeline_context import PipelineContext
-from src.pipelines.steps.processing_steps import get_processing_steps
+from src.core.step_handler import StepHandler
 
 
 class DataPipeline(BasePipeline):
     def __init__(self, ctx: PipelineContext):
         super().__init__(ctx)
         self.modules = {
-            'raw-data': self.create_data_module('raw-data'),
-            'processed-data': self.create_data_module('processed-data'),
-            'feature-eng': self.create_data_module('feature-eng'),
-            'raw-data-skew-kurt': self.create_data_module('raw-data-skew-kurt'),
+            'raw-data': self.dm_handler.get_dm('raw-data'),
+            'processed-data': self.dm_handler.get_dm('processed-data'),
+            'feature-eng': self.dm_handler.get_dm('feature-eng'),
+            'raw-data-skew-kurt': self.dm_handler.get_dm('raw-data-skew-kurt'),
         }
 
     def process(self):
-        initial_process_definitions = get_processing_steps(self.modules)
+        step_defs = StepHandler.get_step_defs("processing", self.modules)
+        step_map = StepHandler.create_step_map(step_defs)
         step_order = [
             "processing",
             "build-features",
@@ -29,5 +29,5 @@ class DataPipeline(BasePipeline):
             "build-features",
             "transform-distributions"
         ]
-        factory = StepFactory(ctx=self.ctx, step_map=create_step_map(initial_process_definitions))
+        factory = StepFactory(ctx=self.ctx, step_map=step_map)
         factory.run_pipeline(step_order, save_points)

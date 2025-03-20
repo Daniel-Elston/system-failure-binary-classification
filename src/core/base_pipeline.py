@@ -23,24 +23,4 @@ class BasePipeline(ABC):
         self.states: States = ctx.states
         self.data_state: DataState = ctx.states.data
         self.model_state: ModelState = ctx.states.model
-        self.data_module_handler = DataModuleHandler(ctx)
-
-    def create_data_module(self, path_key):
-        """Delegated to DataModuleHandler."""
-        return self.data_module_handler.get_or_create_data_module(path_key)
-
-    def load_data_module(self, dm):
-        """Delegated to DataModuleHandler."""
-        return self.data_module_handler.load_data_module(dm)
-
-    def save_data(self, path_data_pair: dict):
-        """Delegated to DataModuleHandler."""
-        try:
-            for path_key, data in path_data_pair.items():
-                self.data_module_handler.save_data(path_key, data)
-        except Exception as e:
-            raise f"Ensure data is a dict and path-key exists:\n{e}"
-        
-    def load_data(self, path_key):
-        """Delegated to DataModuleHandler."""
-        return self.data_module_handler.load_data(path_key)
+        self.dm_handler = DataModuleHandler(ctx)

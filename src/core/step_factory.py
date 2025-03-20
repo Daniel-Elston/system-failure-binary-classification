@@ -14,7 +14,7 @@ class StepFactory(BasePipeline):
         super().__init__(ctx)
         self.ctx = ctx
         self.step_map: dict = step_map or {}
-    
+
     def dispatch_step(self, step_name: str, **runtime_extra):
         try:
             StepClass, base_args, method_name = self.step_map[step_name]
@@ -24,7 +24,7 @@ class StepFactory(BasePipeline):
         resolved_args = {}
         for k, v in base_args.items():
             if isinstance(v, LazyLoad):
-                resolved_args[k] = v.load()
+                resolved_args[k] = v.load(self.dm_handler)
             else:
                 resolved_args[k] = v
 
@@ -40,7 +40,7 @@ class StepFactory(BasePipeline):
             result = self.dispatch_step(step_name)
             if step_name in checkpoints:
                 logging.debug(f"SAVING at checkpoint: {step_name}")
-                self.save_data(result)
+                self.dm_handler.save_data(result)
 
     def run_main(self, steps: List[Callable]):
         """Decorates each step with log_step, then executes."""

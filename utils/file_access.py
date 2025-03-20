@@ -18,7 +18,7 @@ class FileAccess:
     @staticmethod
     def load_file(path: Path):
         path = Path(path)
-        suffix = FileAccess.extract_suffix(path)
+        suffix = path.suffix
         logging.getLogger("file_access").file_track(f"Loading Input File: ``{path}``")
         if suffix == ".parquet":
             return pd.read_parquet(path)
@@ -39,7 +39,7 @@ class FileAccess:
 
     @staticmethod
     def save_file(df: pd.DataFrame, path: Path, index=False):
-        suffix = FileAccess.extract_suffix(path)
+        suffix = path.suffix
         logging.getLogger("file_access").file_track(f"Saving Output File: ``{path}``")
         if suffix == ".parquet":
             return df.to_parquet(path, index=index)
@@ -70,7 +70,6 @@ class FileAccess:
     @staticmethod
     def save_json(data, path, overwrite=False):
         if overwrite is False and Path(path).exists():
-            # logging.warning(f"File already exists: ``{path}``")
             pass
         else:
             logging.debug(f"Saving json to ``{path}``")

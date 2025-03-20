@@ -2,10 +2,8 @@ from __future__ import annotations
 
 from src.core.base_pipeline import BasePipeline
 from src.core.step_factory import StepFactory
-from src.core.step_definition import create_step_map
 from config.pipeline_context import PipelineContext
-from src.pipelines.steps.training_steps import get_training_steps
-from src.pipelines.steps.evaluation_steps import get_evaluation_steps
+from src.core.step_handler import StepHandler
 
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.ensemble import RandomForestClassifier
@@ -19,15 +17,15 @@ class ModelPipeline(BasePipeline):
     def __init__(self, ctx: PipelineContext):
         super().__init__(ctx)
         self.modules = {
-            'transformed-data': self.create_data_module('transformed-data'),
-            'x-train': self.create_data_module('x-train'),
-            'x-test': self.create_data_module('x-test'),
-            'y-train': self.create_data_module('y-train'),
-            'y-test': self.create_data_module('y-test'),
-            'model': self.create_data_module('model'),
-            'x-train-selected': self.create_data_module('x-train-selected'),
-            'x-test-selected': self.create_data_module('x-test-selected'),
-            'y-test-pred': self.create_data_module('y-test-pred')
+            'transformed-data': self.dm_handler.get_dm('transformed-data'),
+            'x-train': self.dm_handler.get_dm('x-train'),
+            'x-test': self.dm_handler.get_dm('x-test'),
+            'y-train': self.dm_handler.get_dm('y-train'),
+            'y-test': self.dm_handler.get_dm('y-test'),
+            'model': self.dm_handler.get_dm('model'),
+            'x-train-selected': self.dm_handler.get_dm('x-train-selected'),
+            'x-test-selected': self.dm_handler.get_dm('x-test-selected'),
+            'y-test-pred': self.dm_handler.get_dm('y-test-pred')
         }
         estimator = RandomForestClassifier(
             n_estimators=100,
@@ -52,15 +50,17 @@ class ModelPipeline(BasePipeline):
         )
 
     def train(self):
-        run_model_definitions = get_training_steps(self.modules, self.pipeline_builder, self.skf)
+        step_defs = StepHandler.get_step_defs("training", self.modules, self.pipeline_builder, self.skf)
+        step_map = StepHandler.create_step_map(step_defs)
         step_order = ["split-dataset", "train-model"]
         save_points = ["split-dataset", "train-model"]
-        factory = StepFactory(ctx=self.ctx, step_map=create_step_map(run_model_definitions))
+        factory = StepFactory(ctx=self.ctx, step_map=step_map)
         factory.run_pipeline(step_order, save_points)
 
     def evaluate(self):
-        run_model_definitions = get_evaluation_steps(self.modules)
+        step_defs = StepHandler.get_step_defs("evaluation", self.modules)
+        step_map = StepHandler.create_step_map(step_defs)
         step_order = ["evaluate-model", "evaluation-visuals"]
         save_points = ["evaluate-model"]
-        factory = StepFactory(ctx=self.ctx, step_map=create_step_map(run_model_definitions))
+        factory = StepFactory(ctx=self.ctx, step_map=step_map)
         factory.run_pipeline(step_order, save_points)

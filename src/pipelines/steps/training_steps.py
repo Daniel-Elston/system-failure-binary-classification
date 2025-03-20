@@ -8,6 +8,30 @@ from src.models.trainer import ModelTrainer
 from imblearn.pipeline import Pipeline as ImbPipeline
 from sklearn.model_selection import StratifiedKFold
 
+from src.core.step_registry import StepRegistry
+
+
+@StepRegistry.register(
+    category="training",
+    name="train-model",
+    step_class=ModelTrainer,
+    args={
+        "x_train": "x-train",
+        "x_test": "x-test",
+        "y_train": "y-train",
+        "y_test": "y-test",
+        "pipeline_builder": ImbPipeline.__name__,
+        "skf": StratifiedKFold.__name__
+    },
+    outputs=["selected-features", "x-train-selected", "x-test-selected", "model"],
+)
+@StepRegistry.register(
+    category="training",
+    name="split-dataset",
+    step_class=DatasetSplitter,
+    args={"dataset": "transformed-data"},
+    outputs=["x-train", "x-test", "y-train", "y-test"],
+)
 
 def get_training_steps(
     modules: dict,

@@ -2,6 +2,9 @@
 
 
 ### **Workflow Dependency - Pipeline Execution Chain**
+
+---
+
 - **Data Initialisation:**
   - Uses DataModuleHandler to retrieve DataModules
   - Data modules stored in a dictionary
@@ -17,11 +20,20 @@
   - Steps are declared in ``src/pipeline/steps/*_steps.py`` using decorators
   - Metadata is preserved in ``steps_metadata.json`` for debugging and visibility
 
-**Workflow Result**:
+---
+
+### **Workflow Result**
+
 1. **Loose Coupling:** Components interact through well-defined interfaces
 2. **Late Binding:** Data loading deffered until step execution
 3. **Discovery:** All steps visible via `StepRegistry.list_all_steps()`
 4. **Reusability:** Step definitions shared across pipelines via registry
+
+---
+
+### **Framework Diagrams**
+
+<br>
 
 ```mermaid
 sequenceDiagram
@@ -57,6 +69,8 @@ sequenceDiagram
     StepMethod -->> Pipeline: Return execution result
 ```
 
+---
+
 ```mermaid
 graph TD
     subgraph Core_Base["Core - Base"]
@@ -82,6 +96,8 @@ graph TD
     style Core_Data fill:#6123,stroke:#111
 ```
 
+---
+
 ```mermaid
 graph LR
     MainPipeline -->|Calls| BasePipeline
@@ -94,4 +110,8 @@ graph LR
     StepRegistry -->|Stores| StepDefinition
 ```
 
+---
+
 ![framework classDiagram](reports/framework_classDiagram.png)
+
+---

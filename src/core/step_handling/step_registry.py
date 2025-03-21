@@ -29,8 +29,8 @@ class StepRegistry:
         def decorator(fn):
             # Record the metadata at import time
             metadata = {
-                "step_n": len(cls._registry[category]) + 1,
                 "name": name,
+                "substep_n": len(cls._registry[category]) + 1,
                 "step_class": step_class.__name__,
                 "args": args,
                 "outputs": outputs,

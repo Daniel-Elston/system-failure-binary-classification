@@ -1,148 +1,206 @@
-{
-    "checks": [
-        {
-            "step_n": 1,
-            "name": "perform-validation-checks",
-            "step_class": "ValidationChecks",
-            "args": {
-                "dataset": "raw-data"
+[
+    {
+        "step": "checks",
+        "step_n": 1,
+        "metadata": [
+            {
+                "name": "perform-validation-checks",
+                "substep_n": 1,
+                "step_class": "ValidationChecks",
+                "args": {
+                    "dataset": "raw-data"
+                },
+                "outputs": []
+            }
+        ]
+    },
+    {
+        "step": "exploration",
+        "step_n": 2,
+        "metadata": [
+            {
+                "name": "collect-metadata",
+                "substep_n": 1,
+                "step_class": "CollectMetadata",
+                "args": {
+                    "dataset": "raw-data",
+                    "path_key": "Optional[raw-data, transformed-data]"
+                },
+                "outputs": []
             },
-            "outputs": []
-        }
-    ],
-    "evaluation": [
-        {
-            "step_n": 1,
-            "name": "evaluate-model",
-            "step_class": "EvaluateModel",
-            "args": {
-                "x_train": "x-train-selected",
-                "x_test": "x-test-selected",
-                "y_train": "y-train",
-                "y_test": "y-test",
-                "model": "model"
+            {
+                "name": "perform-quality-checks",
+                "substep_n": 2,
+                "step_class": "DataQualityChecks",
+                "args": {
+                    "dataset": "raw-data",
+                    "path_key": "Optional[raw-data, transformed-data]"
+                },
+                "outputs": [
+                    "raw-data-skew-kurt"
+                ]
             },
-            "outputs": [
-                "y-test-pred"
-            ]
-        },
-        {
-            "step_n": 2,
-            "name": "evaluation-visuals",
-            "step_class": "EvaluationVisuals",
-            "args": {
-                "x_test": "x-test-selected",
-                "y_test": "y-test",
-                "y_test_pred": "y-test-pred",
-                "model": "model",
-                "path_key": "evaluation"
+            {
+                "name": "generate-visuals",
+                "substep_n": 3,
+                "step_class": "ExploratoryVisuals",
+                "args": {
+                    "dataset": "raw-data",
+                    "path_key": "Optional[raw-data, transformed-data]"
+                },
+                "outputs": []
+            }
+        ]
+    },
+    {
+        "step": "processing",
+        "step_n": 3,
+        "metadata": [
+            {
+                "name": "processing",
+                "substep_n": 1,
+                "step_class": "DataPreprocessor",
+                "args": {
+                    "dataset": "raw-data"
+                },
+                "outputs": [
+                    "processed-data"
+                ]
             },
-            "outputs": []
-        }
-    ],
-    "exploration": [
-        {
-            "step_n": 1,
-            "name": "collect-metadata",
-            "step_class": "CollectMetadata",
-            "args": {
-                "dataset": "raw-data",
-                "path_key": "Optional[raw-data, transformed-data]"
+            {
+                "name": "build-features",
+                "substep_n": 2,
+                "step_class": "BuildFeatures",
+                "args": {
+                    "dataset": "processed-data"
+                },
+                "outputs": [
+                    "feature-eng"
+                ]
             },
-            "outputs": []
-        },
-        {
-            "step_n": 2,
-            "name": "perform-quality-checks",
-            "step_class": "DataQualityChecks",
-            "args": {
-                "dataset": "raw-data",
-                "path_key": "Optional[raw-data, transformed-data]"
+            {
+                "name": "transform-distributions",
+                "substep_n": 3,
+                "step_class": "DistributionTransformer",
+                "args": {
+                    "dataset": "feature-eng",
+                    "raw_data_skew_kurt": "raw-data-skew-kurt"
+                },
+                "outputs": [
+                    "transformed-data"
+                ]
+            }
+        ]
+    },
+    {
+        "step": "exploration",
+        "step_n": 4,
+        "metadata": [
+            {
+                "name": "collect-metadata",
+                "substep_n": 1,
+                "step_class": "CollectMetadata",
+                "args": {
+                    "dataset": "raw-data",
+                    "path_key": "Optional[raw-data, transformed-data]"
+                },
+                "outputs": []
             },
-            "outputs": [
-                "raw-data-skew-kurt"
-            ]
-        },
-        {
-            "step_n": 3,
-            "name": "generate-visuals",
-            "step_class": "ExploratoryVisuals",
-            "args": {
-                "dataset": "raw-data",
-                "path_key": "Optional[raw-data, transformed-data]"
+            {
+                "name": "perform-quality-checks",
+                "substep_n": 2,
+                "step_class": "DataQualityChecks",
+                "args": {
+                    "dataset": "raw-data",
+                    "path_key": "Optional[raw-data, transformed-data]"
+                },
+                "outputs": [
+                    "raw-data-skew-kurt"
+                ]
             },
-            "outputs": []
-        }
-    ],
-    "processing": [
-        {
-            "step_n": 1,
-            "name": "processing",
-            "step_class": "DataPreprocessor",
-            "args": {
-                "dataset": "raw-data"
+            {
+                "name": "generate-visuals",
+                "substep_n": 3,
+                "step_class": "ExploratoryVisuals",
+                "args": {
+                    "dataset": "raw-data",
+                    "path_key": "Optional[raw-data, transformed-data]"
+                },
+                "outputs": []
+            }
+        ]
+    },
+    {
+        "step": "training",
+        "step_n": 5,
+        "metadata": [
+            {
+                "name": "split-dataset",
+                "substep_n": 1,
+                "step_class": "DatasetSplitter",
+                "args": {
+                    "dataset": "transformed-data"
+                },
+                "outputs": [
+                    "x-train",
+                    "x-test",
+                    "y-train",
+                    "y-test"
+                ]
             },
-            "outputs": [
-                "processed-data"
-            ]
-        },
-        {
-            "step_n": 2,
-            "name": "build-features",
-            "step_class": "BuildFeatures",
-            "args": {
-                "dataset": "processed-data"
+            {
+                "name": "train-model",
+                "substep_n": 2,
+                "step_class": "ModelTrainer",
+                "args": {
+                    "x_train": "x-train",
+                    "x_test": "x-test",
+                    "y_train": "y-train",
+                    "y_test": "y-test",
+                    "pipeline_builder": "Pipeline",
+                    "skf": "StratifiedKFold"
+                },
+                "outputs": [
+                    "selected-features",
+                    "x-train-selected",
+                    "x-test-selected",
+                    "model"
+                ]
+            }
+        ]
+    },
+    {
+        "step": "evaluation",
+        "step_n": 6,
+        "metadata": [
+            {
+                "name": "evaluate-model",
+                "substep_n": 1,
+                "step_class": "EvaluateModel",
+                "args": {
+                    "x_train": "x-train-selected",
+                    "x_test": "x-test-selected",
+                    "y_train": "y-train",
+                    "y_test": "y-test",
+                    "model": "model"
+                },
+                "outputs": [
+                    "y-test-pred"
+                ]
             },
-            "outputs": [
-                "feature-eng"
-            ]
-        },
-        {
-            "step_n": 3,
-            "name": "transform-distributions",
-            "step_class": "DistributionTransformer",
-            "args": {
-                "dataset": "feature-eng",
-                "raw_data_skew_kurt": "raw-data-skew-kurt"
-            },
-            "outputs": [
-                "transformed-data"
-            ]
-        }
-    ],
-    "training": [
-        {
-            "step_n": 1,
-            "name": "split-dataset",
-            "step_class": "DatasetSplitter",
-            "args": {
-                "dataset": "transformed-data"
-            },
-            "outputs": [
-                "x-train",
-                "x-test",
-                "y-train",
-                "y-test"
-            ]
-        },
-        {
-            "step_n": 2,
-            "name": "train-model",
-            "step_class": "ModelTrainer",
-            "args": {
-                "x_train": "x-train",
-                "x_test": "x-test",
-                "y_train": "y-train",
-                "y_test": "y-test",
-                "pipeline_builder": "Pipeline",
-                "skf": "StratifiedKFold"
-            },
-            "outputs": [
-                "selected-features",
-                "x-train-selected",
-                "x-test-selected",
-                "model"
-            ]
-        }
-    ]
-}
+            {
+                "name": "evaluation-visuals",
+                "substep_n": 2,
+                "step_class": "EvaluationVisuals",
+                "args": {
+                    "x_test": "x-test-selected",
+                    "y_test": "y-test",
+                    "y_test_pred": "y-test-pred",
+                    "model": "model",
+                    "path_key": "evaluation"
+                },
+                "outputs": []
+            }
+        ]
+    }
+]

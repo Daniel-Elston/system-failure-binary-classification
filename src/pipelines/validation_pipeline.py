@@ -8,13 +8,16 @@ from src.core.step_handling.step_handler import StepHandler
 
 class ValidationPipeline(BasePipeline):
     """
-    Summary: Applies raw mapping and validates result\n
-    Brief:
-        - Use most up-to-date names in mapping
-        - Validate that mapping is correct and identify name-errors (NaNs)
-        - Store name-errors in a file separated from correct logs\n
-    Output: Dataset containing only exercise names not present in mapping
-    Output Path Idx: name-errors
+    Summary
+    ----------
+    Performs data integrity checks on raw data
+
+    Execution Flow
+    ----------
+    1. Loads data modules through DataModuleHandler
+    2. Retrieves validation step definitions via StepHandler
+    3. Executes validation checks via StepFactory
+    4. Outputs invalid records to name-errors path
     """
 
     def __init__(self, ctx: PipelineContext):

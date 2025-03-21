@@ -7,6 +7,19 @@ from src.core.step_handling.step_handler import StepHandler
 
 
 class EDAPipeline(BasePipeline):
+    """
+    Summary
+    ----------
+    Performs exploratory data analysis
+
+    Execution Flow
+    ----------
+    1. Loads data modules through DataModuleHandler
+    2. Retrieves validation step definitions via StepHandler
+    3. Executes validation checks via StepFactory
+    4. Outputs invalid records to name-errors path
+    """
+
     def __init__(self, ctx: PipelineContext):
         super().__init__(ctx)
         self.modules = {

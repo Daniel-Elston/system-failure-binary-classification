@@ -9,44 +9,47 @@ from utils.file_access import FileAccess
 
 
 class DataModule:
+    """
+    Summary
+    ----------
+    Unified data access layer with transformation support
+    Manages data persistence through multiple storage backends with optional
+    data dictionary transformations.
+
+    Extended Summary
+    ----------
+    - Provides transparent access to in-memory state or disk storage
+    - Applies data quality transforms from data dictionary
+    - Maintains consistency between runtime state and persisted data
+    - Implements fallback logic for missing data sources
+
+    Outputs
+    ----------
+    Initialized DataModule ready for load/save operations
+
+    Parameters
+    ----------
+    ctx : PipelineContext
+        Contains path configurations and runtime state
+    state_key : str, optional
+        Key for in-memory state storage, by default None
+    data_path : Path, optional
+        Filesystem path for disk storage, by default None
+    data_dict : dict, optional
+        Data quality transformations specification, by default None
+
+    Raises
+    ------
+    ValueError
+        If neither storage key is specified
+    """
+
     def __init__(
         self, ctx: PipelineContext,
         state_key: str = None,
         data_path: Path = None,
         data_dict: Optional[dict] = None,
     ):
-        """
-        _summary_
-        ----------
-        Handles load/save to memory/disk, with optional data dictionary transformations applied.
-
-        _extended_summary_
-        ----------
-            - Load data from either in-memory state or a local file.
-            - Save data to either in-memory state or a local file.
-            - Apply data dictionary transformations if provided.
-
-        Outputs
-        ----------
-            - Data accessible from in-memory state or local file (optionally transformed).
-
-        Parameters
-        ----------
-        ctx : PipelineContext
-            _description_
-        state_key : str, optional
-            _description_, by default None
-        data_path : Path, optional
-            _description_, by default None
-        data_dict : dict, optional
-            _description_, by default None
-
-        Raises
-        ------
-        ValueError
-            _description_
-        """
-
         if not state_key and not data_path:
             raise ValueError("Either `state_key` or `data_path` must be provided.")
 
@@ -70,7 +73,7 @@ class DataModule:
         return data
 
     def save(self, data):
-        """Save data either to the in-memory state or a local file"""
+        """Persists data to either in-memory state or disk"""
         if self.state_key:
             self._save_to_state(data)
         elif self.data_path:

@@ -14,6 +14,32 @@ from src.core.data_handling.data_module_handler import DataModuleHandler
 
 
 class BasePipeline(ABC):
+    """
+    Summary
+    ----------
+    Abstract base class for pipeline components
+    Provides common infrastructure and accessors for pipeline elements.
+    Centralizes access to context, settings, and state management.
+
+    Extended Summary
+    ----------
+    - Initialises core pipeline components from context
+    - Provides type access to:
+        - Path configurations
+        - Application settings/parameters
+        - Pipeline state containers
+        - Data module handler
+
+    Outputs
+    ----------
+    - Initialized base class providing common pipeline infrastructure
+
+    Parameters
+    ----------
+    ctx : PipelineContext
+        Contains all pipeline runtime configurations and state trackers
+    """
+
     def __init__(self, ctx: PipelineContext):
         self.ctx = ctx
         self.paths: Paths = ctx.paths

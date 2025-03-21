@@ -16,37 +16,41 @@ module_map: Dict[str, dict] = {
 
 
 class DataModuleHandler:
+    """
+    Summary
+    ----------
+    DataModule instance manager
+    Factory and cache for DataModule instances with path-based lookup.
+
+    Extended Summary
+    ----------
+    - Maintains mapping between path keys and DataModule configurations
+    - Caches DataModule instances for reuse
+    - Coordinates bulk save operations
+    - Implements error handling for data operations
+
+    Outputs
+    ----------
+    Initialized handler ready for data operations
+
+    Parameters
+    ----------
+    ctx : PipelineContext
+        Contains path configurations and runtime state
+    """
+
     def __init__(
         self, ctx: PipelineContext
     ):
-        """
-        _summary_
-        ----------
-        Manages retrieval of DataModules. Instantiates DataModules and allows interaction.
-
-        _extended_summary_
-        ----------
-            - Load data from a specified DataModule.
-            - Save data to a specified DataModule.
-            - Get DataModule instance, or create it if it doesn't exist.
-
-        Outputs
-        ----------
-            - Data accessible from DataModules.
-            - Data saved to DataModules.
-            - Instantiated DataModules.
-
-        Parameters
-        ----------
-        ctx : PipelineContext
-            _description_
-        """
         self.ctx = ctx
         self.modules: Dict[str, DataModule] = {}
         self.module_map: Dict[str, dict] = module_map
 
     def get_dm(self, path_key: str) -> DataModule:
-        """Get and cache DataModule instance."""
+        """
+        Retrieves DataModule instance
+        Implements caching to avoid redundant initialisations.
+        """
         data_dict = self.module_map.get(path_key)
         dm = DataModule(
             self.ctx,
@@ -58,7 +62,7 @@ class DataModuleHandler:
         return self.modules[path_key]
 
     def save_data(self, path_data_pair: Dict[str, pd.DataFrame]):
-        """Save data to a specified DataModule."""
+        """Handles multiple data persistence operations in single call."""
         try:
             for path_key, data in path_data_pair.items():
                 dm = self.get_dm(path_key)
@@ -67,7 +71,7 @@ class DataModuleHandler:
             raise TypeError(f"Unsupported data type: {type(data)} for path: {path_key}")
 
     def load_dm(self, dm: DataModule) -> Any:
-        """Load data from a specified DataModule."""
+        """Safe load data from a specified DataModule."""
         if dm is None:
             raise AttributeError('NoneType: Verify module path keys, and path config keys')
         try:

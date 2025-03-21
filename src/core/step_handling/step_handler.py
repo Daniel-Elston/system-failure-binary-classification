@@ -15,8 +15,27 @@ from src.pipelines.steps import training_steps
 
 class StepHandler:
     """
-    Central registry for retrieving step definitions from various modules
-    (checks_steps, evaluation_steps, etc.) using simple category strings.
+    Summary
+    -------
+    Central registry for pipeline step definitions
+    Provides unified access to step configurations across different pipeline stages.
+    Converts modular step definitions into StepFactory-compatible format.
+
+    Extended Summary
+    ----------
+    - Maintains category-to-retrieval-function mapping
+    - Validates category requests
+    - Transforms StepDefinition objects into factory configuration format
+
+    Returns
+    -------
+    dict
+        StepFactory-compatible mapping when using create_step_map()
+
+    Raises
+    ------
+    ValueError
+        When requesting undefined category
     """
     _step_to_func: Dict[str, Callable] = {
         "validation": checks_steps.get_validation_checks_steps,
@@ -29,8 +48,9 @@ class StepHandler:
     @classmethod
     def get_step_defs(cls, category: str, *args: Any, **kwargs: Any) -> List[StepDefinition]:
         """
-        Retrieve StepDefinition objects for a given category, passing any extra args/kwargs
-        to the underlying function.
+        Retrieves step definitions for a pipeline stage
+        Returns configured StepDefinitions for requested category,
+        forwarding any additional arguments to the definition getter.
         """
         func = cls._step_to_func.get(category)
         if not func:
@@ -40,7 +60,11 @@ class StepHandler:
 
     @staticmethod
     def create_step_map(definitions: List[StepDefinition]) -> dict:
-        """Convert a list of StepDefinitions into a StepFactory-compatible map."""
+        """
+        Transforms StepDefinitions into StepFactory configuration
+        Converts list of StepDefinition objects into dictionary
+        format required by StepFactorys step_map.
+        """
         return {
             step_def.name: (
                 step_def.step_class,

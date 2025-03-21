@@ -9,8 +9,23 @@ from typing import List
 
 class StepRegistry:
     """
-    A simple class-level registry for storing step metadata at import time.
-    Each step's metadata (category, name, outputs, args) is recorded via a decorator.
+    Summary
+    ----------
+    Central catalog for pipeline step configurations
+    Maintains import-time metadata about pipeline steps using class decorators.
+    Enables discovery of available steps and their configurations.
+
+    Extended Summary
+    ----------
+    - Uses decorator-based registration at module import time
+    - Organizes steps by category (e.g., 'preprocessing', 'modeling')
+    - Stores metadata including arguments, outputs, and execution order
+    - Provides complete registry inspection via list_all_steps()
+
+    Returns
+    -------
+    Dict[str, List[Dict[str, Any]]]
+        Category-keyed dictionary of step metadata when using list_all_steps()
     """
     _registry: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
 
@@ -24,7 +39,8 @@ class StepRegistry:
         outputs: List[str],
     ):
         """
-        Decorator that attaches step metadata (import-time) to the registry.
+        Registers step metadata in the global registry
+        Decorator that records step configuration during module import.
         """
         def decorator(fn):
             # Record the metadata at import time
@@ -47,4 +63,8 @@ class StepRegistry:
 
     @classmethod
     def list_all_steps(cls) -> Dict[str, List[Dict[str, Any]]]:
+        """
+        Retrieves complete step registry at import time
+        Provides snapshot of all registered steps organized by category.
+        """
         return dict(cls._registry)
